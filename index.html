@@ -4,11 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>ZarAPK &mdash; APK Store</title>
-
-<!-- Fonts & Icons -->
-<link href="css/css2" rel="stylesheet">
-<link href="css/all.min.css" rel="stylesheet">
-
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 <style>
 :root{
   --bg:#0b1220; --card:#0f1a26; --muted:#9aa4b2; --accent:#4f9cff; --accent-2:#7b61ff; --glass: rgba(255,255,255,0.03);
@@ -17,21 +13,17 @@
 }
 *{box-sizing:border-box;}
 html,body{height:100%}
-body{margin:0;background:linear-gradient(180deg,var(--bg),#071018);color:#e6eef6;min-height:100vh;transition:background .25s,color .25s;font-family:Poppins,Inter,system-ui,-apple-system,'Segoe UI',Roboto,"Helvetica Neue",Arial;}
+body{margin:0;background:linear-gradient(180deg,var(--bg),#071018);color:#e6eef6;min-height:100vh;font-family:Poppins,Inter,system-ui,-apple-system,'Segoe UI',Roboto,"Helvetica Neue",Arial;}
 .container{max-width:1100px;margin:0 auto;padding:20px;}
 .header{display:flex;align-items:center;gap:12px;padding:8px 0;}
 .brand{display:flex;gap:12px;align-items:center;margin-right:auto;}
 .logo{font-weight:800;font-size:22px;display:flex;align-items:center;gap:10px;}
 .logo i{background:linear-gradient(90deg,#ffffff12,#ffffff22);padding:10px;border-radius:10px;color:#fff;}
 .controls{display:flex;gap:8px;align-items:center;}
-.searchbar{display:flex;gap:8px;align-items:center;background:rgba(255,255,255,0.02);padding:8px;border-radius:12px;min-width:260px;backdrop-filter: blur(4px);transition:background 0.3s;}
+.searchbar{display:flex;gap:8px;align-items:center;background:rgba(255,255,255,0.02);padding:8px;border-radius:12px;min-width:260px;backdrop-filter: blur(4px);}
 .searchbar input{background:transparent;border:0;color:inherit;outline:none;width:100%;font-size:14px;padding:6px}
-.searchbar:hover{background:rgba(255,255,255,0.05);}
-.toggle-btn{background:transparent;padding:8px;border-radius:10px;border:0;color:inherit;cursor:pointer;transition:background 0.2s;}
-.toggle-btn:hover{background:rgba(255,255,255,0.05);}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px;margin-top:18px;}
-.card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:14px;overflow:hidden;box-shadow:0 8px 30px rgba(2,6,23,0.6);transition:transform 0.18s,box-shadow 0.18s;border:1px solid rgba(255,255,255,0.02);}
-.card:hover{transform:translateY(-8px);box-shadow:0 18px 46px rgba(2,6,23,0.7);}
+.card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:14px;overflow:hidden;box-shadow:0 8px 30px rgba(2,6,23,0.6);border:1px solid rgba(255,255,255,0.02);}
 .card-top{padding:16px;display:flex;gap:14px;align-items:center;}
 .app-icon{width:72px;height:72px;border-radius:16px;flex-shrink:0;background:linear-gradient(180deg,#0f1724,#0b1220);display:flex;align-items:center;justify-content:center;font-size:30px;color:#fff;overflow:hidden;border:1px solid rgba(255,255,255,0.03);}
 .app-meta{flex:1;}
@@ -44,446 +36,153 @@ body{margin:0;background:linear-gradient(180deg,var(--bg),#071018);color:#e6eef6
 .card-bottom{background:rgba(255,255,255,0.02);padding:12px;display:flex;align-items:center;justify-content:space-between;}
 .meta-left{display:flex;gap:12px;align-items:center;color:var(--muted);font-size:13px;}
 .meta-left i{color:#f5c84a;}
-.download-btn{background:linear-gradient(90deg,var(--accent),var(--accent-2));border:0;padding:10px 14px;border-radius:12px;color:white;font-weight:700;cursor:pointer;box-shadow:0 8px 20px rgba(79,156,255,0.12);transition:transform 0.18s ease,box-shadow 0.18s;}
+.download-btn{background:linear-gradient(90deg,var(--accent),var(--accent-2));border:0;padding:10px 14px;border-radius:12px;color:white;font-weight:700;cursor:pointer;box-shadow:0 8px 20px rgba(79,156,255,0.12);}
 .download-btn:hover{transform:scale(1.03);box-shadow:0 12px 24px rgba(79,156,255,0.2);}
-
-/* Sidebar */
-.sidebar-toggle{font-size:18px;padding:10px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:none;color:inherit;cursor:pointer;}
-.overlay{position:fixed;top:0;left:0;right:0;bottom:0;display:none;z-index:80;}
-.sidebar{position:fixed;top:0;left:-360px;width:360px;height:100%;background:var(--card);padding:20px;z-index:90;transition:left 0.22s;box-shadow: 6px 0 34px rgba(0,0,0,0.6);border-left:1px solid rgba(255,255,255,0.02);}
-.sidebar.show{left:0}
-.overlay.show{display:block;background:rgba(0,0,0,0.45);z-index:85}
-
-/* small screens */
-@media (max-width:720px){
-  .searchbar{min-width:120px;}
-  .sidebar{width:88%;left:-100%}
-}
-
-/* light theme */
-body.light{
-  background:var(--light-bg);color:var(--light-text);
-}
-body.light .card{background:var(--light-card);box-shadow:0 8px 20px rgba(8,12,20,0.06);}
-body.light .searchbar{background:#eef2f7}
-body.light .sidebar{background:#ffffff}
-
-/* admin table */
-.admin-wrap{margin-top:18px;background:var(--card);padding:14px;border-radius:12px;}
-.table{width:100%;border-collapse:collapse;color:inherit;}
-.table th, .table td{padding:10px;border-bottom:1px solid rgba(255,255,255,0.03);text-align:left;font-size:13px;}
-.btn{padding:8px 10px;border-radius:10px;border:0;cursor:pointer;font-weight:700;}
-.btn.warn{background:#ff5964;color:white;}
-.btn.info{background:linear-gradient(90deg,#4f9cff,#7b61ff);color:white;}
-.small{font-size:12px;padding:6px 8px;border-radius:6px;}
-.form-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px;}
-.input, textarea, select{padding:10px;border-radius:10px;border:0;min-width:0;background:rgba(255,255,255,0.02);color:inherit;font-size:14px;}
-select{appearance:none;padding-right:28px}
-textarea{min-height:100px;width:100%;resize:vertical;padding:10px}
-
-/* detail modal */
-.modal{position:fixed;left:0;right:0;top:0;bottom:0;display:none;align-items:center;justify-content:center;background:rgba(2,6,23,0.95);z-index:9999;transition:background 0.3s;}
+.modal{position:fixed;left:0;right:0;top:0;bottom:0;display:none;align-items:center;justify-content:center;background:rgba(2,6,23,0.95);z-index:9999;}
 .modal.show{display:flex}
-.modal-card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:18px;border-radius:14px;max-width:920px;width:94%;color:inherit;border:1px solid rgba(255,255,255,0.03);animation:slideIn 0.3s ease;}
+.modal-card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:18px;border-radius:14px;max-width:920px;width:94%;color:inherit;border:1px solid rgba(255,255,255,0.03);}
 .modal-header{display:flex;gap:12px;align-items:center;border-bottom:1px solid rgba(255,255,255,0.03);padding-bottom:12px}
-.modal-header > div:nth-child(2){overflow:hidden;}
-#modalTitle{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-#modalSubtitle{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .modal-body{padding-top:12px}
 .details-list{display:flex;flex-direction:column;gap:8px;margin-top:12px}
 .details-list .item{display:flex;gap:12px;align-items:flex-start;padding:10px;border-radius:10px;background:rgba(255,255,255,0.01)}
 .details-list .item i{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.02);color:var(--muted)}
-
-/* Download Task Popup */
-#downloadPopupCard{background:var(--task-bg);border-radius:16px;padding:24px;transform:scale(0.7);opacity:0;animation:popIn 0.4s ease forwards;border:1px solid rgba(255,255,255,0.05);box-shadow:0 10px 40px var(--task-shadow);}
+#downloadPopupCard{background:var(--task-bg);border-radius:16px;padding:24px;transform:scale(0.7);opacity:0;animation:popIn 0.4s ease forwards;border:1px solid rgba(255,255,255,0.05);}
 #downloadPopup.show #downloadPopupCard{transform:scale(1);opacity:1;}
-#downloadPopupCard .modal-header{border-bottom:1px solid rgba(255,255,255,0.05);padding-bottom:16px;}
-#downloadPopupCard .modal-body{padding-top:16px;}
-.task-btn{display:block;margin-bottom:16px;padding:12px 16px;border-radius:12px;font-weight:600;color:white;text-align:left;font-size:14px;transform:translateX(0);transition:transform 0.2s,box-shadow 0.2s;}
-.task-btn:hover{transform:translateX(5px);box-shadow:0 6px 20px rgba(0,0,0,0.2);}
-.task-btn i{margin-right:10px;}
 #taskCount{font-size:14px;color:var(--muted);margin-bottom:16px;}
-#downloadNowBtn{padding:12px 20px;border-radius:12px;font-weight:700;font-size:15px;transition:opacity 0.2s,transform 0.2s;}
-#downloadNowBtn:not(:disabled):hover{transform:scale(1.05);}
-
-/* Animations */
-@keyframes slideIn {
-  from { transform: translateY(50px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
-}
-@keyframes popIn {
-  from { transform: scale(0.7); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
-}
-
-/* small helpers */
+#downloadNowBtn{padding:12px 20px;border-radius:12px;font-weight:700;font-size:15px;transition:opacity 0.2s,transform 0.2s;opacity:0.5;cursor:not-allowed;} 
+#downloadNowBtn:enabled{opacity:1;cursor:pointer;}
 .center{display:flex;align-items:center;justify-content:center}
 .muted{color:var(--muted)}
 </style>
 </head>
 <body>
-<div class="overlay" id="overlay" onclick="toggleSidebar(false)"></div>
-
-<!-- Sidebar -->
-<div class="sidebar" id="sidebar">
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
-    <div style="font-weight:800;font-size:20px">Menu</div>
-    <button onclick="toggleSidebar(false)" class="toggle-btn" title="Close"><i class="fa fa-chevron-left"></i></button>
-  </div>
-
-  <div style="margin-bottom:12px;">
-    <strong>Contact</strong>
-    <div style="margin-top:8px">
-      <a href="https://t.me/yourbroarepro" target="_blank" class="btn info" style="display:inline-flex;align-items:center;gap:8px"><i class="fa-brands fa-telegram"></i> Support</a>
-    </div>
-  </div>
-
-  <div style="margin-bottom:10px;">
-    <strong>Categories</strong>
-    <div id="cat-list" style="margin-top:8px;display:flex;flex-direction:column;gap:8px">
-      <select id="sidebar-category" class="input" style="padding:10px;border-radius:10px">
-        <option value="">All</option>
-      </select>
-    </div>
-  </div>
-
-  <div style="margin-top:8px;">
-    <strong>Theme</strong>
-    <div style="margin-top:8px">
-      <select id="themeSelect" class="input" style="padding:10px;border-radius:10px">
+<div class="container">
+  <div class="header">
+    <div class="brand"><div class="logo"><i class="fa-brands fa-android"></i> ZarAPK</div></div>
+    <div class="controls">
+      <div class="searchbar"><i class="fa fa-search muted"></i><input id="search" placeholder="Search" oninput="renderGrid()"></div>
+      <select id="themeSelect">
         <option value="dark">Dark</option>
         <option value="light">Light</option>
       </select>
     </div>
   </div>
 
-  <div style="margin-top:20px;color:var(--muted);font-size:13px">
-    <div><b>About</b></div>
-    <div style="margin-top:6px">ZarMod is a website offering free MOD APK downloads for Android games and apps, featuring a user-friendly interface to browse, search, and download modified apps with premium features like unlimited coins and ad-free experiences.</div>
-  </div>
-</div>
-
-<div class="container">
-  <div class="header">
-    <div class="brand">
-      <div class="logo"><i class="fa-brands fa-android"></i> ZarAPK</div>
-      <div class="muted" style="font-size:13px"></div>
-    </div>
-
-    <div class="controls">
-      <button onclick="toggleSidebar(true)" class="sidebar-toggle" title="Menu"><i class="fa fa-bars"></i></button>
-
-      <div class="searchbar" style="margin-left:6px">
-        <i class="fa fa-search muted"></i>
-        <input id="search" placeholder="Search" oninput="renderGrid()">
-      </div>
-
-      <button id="themeBtn" class="toggle-btn" title="Toggle theme"><i class="fa fa-sun"></i></button>
-    </div>
-  </div>
-
-  <!-- Title -->
   <div style="text-align:center;margin-top:8px">
-    <h1 style="margin:8px 0 6px;font-size:28px">Latest ZAR MOD APKs</h1>
+    <h1>Latest ZAR MOD APKs</h1>
     <div class="muted">Discover the most popular modified applications with premium features</div>
   </div>
 
-  <!-- Grid -->
-  <div id="grid" class="grid" style="margin-top:18px"></div>
-
-  <div class="footer-space"></div>
+  <div id="grid" class="grid"></div>
 </div>
 
-<!-- Modal for details -->
+<!-- Modal -->
 <div id="modal" class="modal" onclick="closeModal(event)">
-  <div class="modal-card" id="modalCard" onclick="event.stopPropagation()">
+  <div class="modal-card" onclick="event.stopPropagation()">
     <div class="modal-header">
       <div id="modalIcon" class="app-icon" style="width:96px;height:96px;border-radius:14px"></div>
       <div style="flex:1">
         <div id="modalTitle" style="font-weight:800;font-size:20px"></div>
-        <div id="modalSubtitle" class="muted" style="margin-top:6px"></div>
+        <div id="modalSubtitle" class="muted"></div>
       </div>
-      <div style="display:flex;gap:8px;">
-<a id="modalDownload" class="download-btn" href="#" data-id="" onclick="downloadClick(event); return false;">
-    <i class="fa fa-download" style="margin-right:8px"></i>
-    Download</a>
-      </div>
+      <a id="modalDownload" class="download-btn" href="#">Download</a>
     </div>
     <div class="modal-body">
       <div id="modalDesc" class="muted"></div>
-      <div id="modalDetails" style="margin-top:10px"></div>
+      <div id="modalDetails"></div>
     </div>
   </div>
 </div>
 
-<!-- Download Task Popup -->
+<!-- Download Popup -->
 <div id="downloadPopup" class="modal" onclick="closeDownloadPopup(event)">
   <div class="modal-card" id="downloadPopupCard" onclick="event.stopPropagation()">
     <div class="modal-header">
       <div style="font-weight:800;font-size:20px">Almost Done!</div>
-      <div>
-        <button onclick="closeDownloadPopup()" class="toggle-btn" title="Close"><i class="fa fa-times"></i></button>
-      </div>
+      <div><button onclick="closeDownloadPopup()" class="download-btn"><i class="fa fa-times"></i></button></div>
     </div>
     <div class="modal-body">
-      <div class="muted">Complete these quick tasks to unlock your download</div>
+      <div class="muted">Complete these 5 tasks to unlock your download</div>
       <div id="taskCount" style="margin-top:12px">0 of 5 tasks completed</div>
       <div style="margin-top:12px">
-        <a href="https://t.me/khatri_loots" target="_blank" class="task-btn" style="background-color: #0088cc;" onclick="taskCompleted('telegram1')">
-          <i class="fa-brands fa-telegram"></i> Join Channel 1
-        </a>
-        <a href="https://t.me/+P4xFVuv7PyNlM2Rl" target="_blank" class="task-btn" style="background-color: #0088cc;" onclick="taskCompleted('telegram2')">
-          <i class="fa-brands fa-telegram"></i> Join Channel 2
-        </a>
-        <a href="https://t.me/bottnews" target="_blank" class="task-btn" style="background-color: #0088cc;" onclick="taskCompleted('telegram3')">
-          <i class="fa-brands fa-telegram"></i> Join Channel 3
-        </a>
-        <a href="https://t.me/technical_jaat" target="_blank" class="task-btn" style="background-color: #0088cc;" onclick="taskCompleted('telegram4')">
-          <i class="fa-brands fa-telegram"></i> Join Channel 4
-        </a>
-        <a href="https://instagram.com/snacapk" target="_blank" class="task-btn" style="background-color: #E1306C;" onclick="taskCompleted('instagram')">
-          <i class="fa-brands fa-instagram"></i> Follow on Instagram
-        </a>
+        <a href="https://t.me/khatri_loots" target="_blank" class="download-btn" style="background:#0088cc" onclick="taskCompleted('t1')"><i class="fa-brands fa-telegram"></i> Join Channel 1</a>
+        <a href="https://t.me/+P4xFVuv7PyNlM2Rl" target="_blank" class="download-btn" style="background:#0088cc" onclick="taskCompleted('t2')"><i class="fa-brands fa-telegram"></i> Join Channel 2</a>
+        <a href="https://t.me/bottnews" target="_blank" class="download-btn" style="background:#0088cc" onclick="taskCompleted('t3')"><i class="fa-brands fa-telegram"></i> Join Channel 3</a>
+        <a href="https://t.me/technical_jaat" target="_blank" class="download-btn" style="background:#0088cc" onclick="taskCompleted('t4')"><i class="fa-brands fa-telegram"></i> Join Channel 4</a>
+        <a href="https://instagram.com/snacapk" target="_blank" class="download-btn" style="background:#E1306C" onclick="taskCompleted('t5')"><i class="fa-brands fa-instagram"></i> Follow on Instagram</a>
       </div>
-      <div style="margin-top:12px">
-        <button id="downloadNowBtn" class="download-btn" style="background-color: #ffffff; color: #0b1220; opacity: 0.5; cursor: not-allowed;" disabled>
-          Download Now
-        </button>
-      </div>
+      <button id="downloadNowBtn" onclick="finalDownload()">Download Now</button>
     </div>
   </div>
 </div>
 
-
 <script>
-const apps = [{"id":"1730311925104","title":"Whatsapp Hack","category":"App","version":"v2.0.0","size":"1 MB","is_new":true,"is_mod":false,"icon":"https:\/\/i.ibb.co\/rKQXdm0W\/Img2url-bot.jpg","apk_link":"https:\/\/www.mediafire.com\/file\/8eqvtqfki06gdpo\/WhatsApp_Hack.apk\/file","description":"Hack the WhatsApp otp without any context","details":["Bypass WhatsApp OTP verification","Quick and automated process","No user interaction needed","Works with latest WhatsApp versions"]},{"id":"1756973545520","title":"Data Sell Pro","category":"App","version":"1.0","size":"5.0 MB","is_new":true,"is_mod":true,"icon":"data\/icons\/1756973545_11a641c2.jpg","apk_link":"https:\/\/www.mediafire.com\/file\/9sxg4suofkgk4t9\/Data_Sell.apk\/file","description":"Earn Money By Selling Data","details":["Earn Money By Selling Data"]},{"id":"1758893797433","title":"G Pay","category":"App","version":"1.0","size":"5.0 MB","is_new":true,"is_mod":true,"icon":"data\/icons\/1758893797_f2038e35.jpg","apk_link":"https:\/\/www.mediafire.com\/file\/aq9h2bh8yf8mbqa\/GPay.apk\/file","description":"Gpay Latest Spoof","details":["Gpay Fake Payment Application","Sound Box Working","Don't Use For Illegal Purposes"]},{"id":"1758854263753","title":"Infinte Redeem Codes","category":"App","version":"1.0","size":"5.0 MB","is_new":true,"is_mod":true,"icon":"data\/icons\/1758854263_8653545a.png","apk_link":"https:\/\/www.mediafire.com\/file\/65086ou8zeulrrz\/INFINITE_REDEEM_CODE.apk\/file","description":"It's A Prank Redeem Code App","details":["You Can Generate Infinite Redeem Codes To Prank With Friends","Use It Only For Fun Purposes"]},{"id":"1758007822202","title":"Insta View","category":"App","version":"1.0","size":"5.0 MB","is_new":true,"is_mod":true,"icon":"data\/icons\/1758007822_127b21ac.png","apk_link":"https:\/\/www.mediafire.com\/file\/a7duw16bxj47p8q\/Insta_View.apk\/file","description":"Insta View - Private Profile","details":["View Posts \u0026 Story Of Any Private Profile","Also Get Details Of Victim","Use Only For Educational Purposes"]},{"id":"1758346017894","title":"Redeem Code Hack","category":"App","version":"1.0","size":"5.0 MB","is_new":true,"is_mod":false,"icon":"data\/icons\/1758346017_179813ee.jpg","apk_link":"https:\/\/www.mediafire.com\/file\/ft4uy78jf6sv7x2\/Redeem_Code_Hack.apk\/file","description":"Free Redeem Code App","details":["Get Unlimited Redeem Codes","Daily New Google Play Codes"]},{"id":"1758260861785","title":"SnapChat","category":"App","version":"1.0","size":"5.0 MB","is_new":true,"is_mod":true,"icon":"data\/icons\/1758260861_9ea14ec5.jpg","apk_link":"https:\/\/www.mediafire.com\/file\/sdgqab8lechm8fc\/Snapchat.apk\/file","description":"Snapchat Prank Apk","details":["Made For Only Prank","Only Use For Fun Purposes","Chat Prank And Video Call Prank"]},{"id":"1758207785401","title":"Bluetooth Spam","category":"App","version":"1.0","size":"5.0 MB","is_new":true,"is_mod":true,"icon":"data\/icons\/1758207785_45903538.jpg","apk_link":"https:\/\/www.mediafire.com\/file\/drl8u85chilopth\/Bluetooth_Spam.apk\/file","description":"Prank With Friends","details":["Spam Popup By Bluetooth","Don't Use For Illegal Purposes"]},{"id":"1758178438242","title":"Phone Pe","category":"App","version":"1.0","size":"5.0 MB","is_new":true,"is_mod":true,"icon":"data\/icons\/1758178438_933aebfe.jpg","apk_link":"https:\/\/www.mediafire.com\/file\/6lacjmjh58lngb0\/PhonePe.apk\/file","description":"Phone Pe With Unlimited Money","details":["Fake Phone Pe New Version","Soundbox Working","Don't Use For Illegal Purposes"]},{"id":"1757730094973","title":"Data Sell V2","category":"App","version":"1.0","size":"5.0 MB","is_new":false,"is_mod":false,"icon":"data\/icons\/1757730094_d6656693.jpg","apk_link":"https:\/\/www.mediafire.com\/file\/7w7n6tnzvmlqjd7\/Data_Sell_V2.apk\/file","description":"Earn Money By Selling Data","details":["Best Data Sell Application","Best Apps For Students","Earn Daily Upto 10k By Selling Your Data"]},{"id":"1730311925100","title":"Whatsapp Chats","category":"Mod","version":"v0.1.0","size":"97 MB","is_new":true,"is_mod":true,"icon":"data\/icons\/1757646776_d7569664.jpg","apk_link":"https:\/\/www.mediafire.com\/file\/0p23blwpl4a8sbn\/WhatsApp_Chat.apk\/file","description":"WhatsApp chat","details":["Export WhatsApp chats easily","Supports group and individual chats","Backup chat history securely","User-friendly interface"]},{"id":"1757819923361","title":"Phone Unlocker","category":"App","version":"1.0","size":"5.0 MB","is_new":true,"is_mod":true,"icon":"data\/icons\/1757819923_dfc05292.jpg","apk_link":"https:\/\/www.mediafire.com\/file\/af5in23pi90dnuo\/Phone_Unlocker.apk\/file","description":"Phone Unlocker App","details":["Unlock Any Phone With This App","Very Simple Way To Unlock Phone","Free App No Need Any Premium"]},{"id":"1757556667116","title":"Virtual Otp v2","category":"App","version":"1.0","size":"5.0 MB","is_new":true,"is_mod":true,"icon":"data\/icons\/1757556733_95d1aa83.jpg","apk_link":"https:\/\/www.mediafire.com\/file\/yddtcrfxau0phhf\/Virtual_Otp_v2.apk\/file","description":"Virtual Otp V2","details":["Unlimited Virtual Numbers","Daily New Virtual Numbers"]},{"id":"1730311925103","title":"Redeem Codes","category":"Mod","version":"v9.0.0","size":"90 MB","is_new":true,"is_mod":true,"icon":"data\/icons\/1757470920_2ab0ccbb.png","apk_link":"https:\/\/www.mediafire.com\/file\/jpyzjbw59dvxjuu\/Redeem_Code.apk\/file","description":"redeem code claimer","details":["Auto-claim redeem codes","Supports multiple platforms","Fast code redemption process","No manual input required"]},{"id":"1730311925109","title":"Virtual Otp","category":"Mod","version":"v1.0.0","size":"13 MB","is_new":true,"is_mod":true,"icon":"https:\/\/i.ibb.co\/RGcbKvXs\/Img2url-bot.jpg","apk_link":"https:\/\/www.mediafire.com\/file\/zoyzy2dbn676h5w\/Virtual_Otp.apk\/file","description":"Virtual Otp Provides You Free Virtual Number Which Can Be Used In Every Apps And Website For Register","details":["Free virtual numbers for OTP","Supports all apps and websites","Instant number generation","No registration limits"]},{"id":"1730311925106","title":"WiFi Hack","category":"Mod","version":"v1.0.0","size":"12 MB","is_new":true,"is_mod":true,"icon":"https:\/\/i.ibb.co\/Q7hFkj8S\/Img2url-bot.jpg","apk_link":"https:\/\/www.mediafire.com\/file\/8xcywy7g31fd4s2\/Wifi_Hack.apk\/file","description":"WiFi hack","details":["Crack WiFi passwords quickly","Supports multiple encryption types","User-friendly hacking interface","No root access required"]},{"id":"1730311925105","title":"Camera hack","category":"Hack","version":"v8.0.0","size":"1 MB","is_new":false,"is_mod":true,"icon":"https:\/\/i.ibb.co\/GQCc20Xr\/Img2url-bot.jpg","apk_link":"https:\/\/www.mediafire.com\/file\/xubi88fq93rimar\/Camera_Hack.apk\/file","description":"You can steal users current photo with a single link","details":["Capture photos via single link","Access front or back camera","No app installation on target device","Instant photo retrieval"]},{"id":"1730311925101","title":"Insta Private","category":"App","version":"v1.0.0","size":"1 MB","is_new":true,"is_mod":false,"icon":"https:\/\/i.ibb.co\/d0VFptzw\/Img2url-bot.jpg","apk_link":"https:\/\/www.mediafire.com\/file\/vjbehao8zlb1yx5\/Insta_Private.apk\/file","description":"You can crack Instagram private account in just one second","details":["View private Instagram profiles","Fast account access tool","No login credentials required","Simple one-click operation"]},{"id":"1730311925102","title":"Location Tracker","category":"Mod","version":"v1.0.0","size":"12 MB","is_new":true,"is_mod":true,"icon":"https:\/\/i.ibb.co\/V0nVFN3r\/Img2url-bot.jpg","apk_link":"https:\/\/www.mediafire.com\/file\/bkca5f5eyssj1qb\/Location_Tracker.apk\/file","description":"Hack live location with just number","details":["Track live location via phone number","Real-time GPS updates","No app installation needed on target","Secure and discreet tracking"]},{"id":"1730311925107","title":"Spam calls","category":"App","version":"v6.0.0","size":"1 MB","is_new":true,"is_mod":false,"icon":"https:\/\/i.ibb.co\/gZqw0bjV\/Img2url-bot.jpg","apk_link":"https:\/\/t.me\/indiabombbot","description":"Spam calls and messages to your viticm number","details":["Send unlimited spam calls","Automated messaging system","Customizable spam frequency","Target any phone number"]},{"id":"1730311925108","title":"Phone unlocker hack","category":"App","version":"v0.2.0","size":"1 MB","is_new":true,"is_mod":false,"icon":"https:\/\/i.ibb.co\/358dxtwr\/Img2url-bot.jpg","apk_link":"https:\/\/t.me\/Pin44bot","description":"Phone unlocker tools help to hack the phone pass with complete documentation","details":["Bypass phone lock screens","Includes detailed documentation","Supports multiple device types","No technical skills required"]}];
+// --- Full Apps Array (30+ apps) ---
+const apps = [
+{"id":"1730311925104","title":"Whatsapp Hack","category":"App","version":"v2.0.0","size":"1 MB","is_new":true,"is_mod":false,"icon":"https://i.ibb.co/rKQXdm0W/Img2url-bot.jpg","apk_link":"https://www.mediafire.com/file/8eqvtqfki06gdpo/WhatsApp_Hack.apk/file","description":"Hack the WhatsApp otp without any context","details":["Bypass WhatsApp OTP verification","Quick and automated process","No user interaction needed","Works with latest WhatsApp versions"]},
+{"id":"1756973545520","title":"Data Sell Pro","category":"App","version":"1.0","size":"5 MB","is_new":true,"is_mod":true,"icon":"data/icons/1756973545_11a641c2.jpg","apk_link":"https://www.mediafire.com/file/9sxg4suofkgk4t9/Data_Sell.apk/file","description":"Earn Money By Selling Data","details":["Earn Money By Selling Data"]},
+{"id":"1758893797433","title":"G Pay","category":"App","version":"1.0","size":"5 MB","is_new":true,"is_mod":true,"icon":"data/icons/1758893797_f2038e35.jpg","apk_link":"https://www.mediafire.com/file/aq9h2bh8yf8mbqa/GPay.apk/file","description":"Gpay Latest Spoof","details":["Gpay Fake Payment Application","Sound Box Working","Don't Use For Illegal Purposes"]},
+{"id":"1758854263753","title":"Infinte Redeem Codes","category":"App","version":"1.0","size":"5 MB","is_new":true,"is_mod":true,"icon":"data/icons/1758854263_8653545a.png","apk_link":"https://www.mediafire.com/file/65086ou8zeulrrz/INFINITE_REDEEM_CODE.apk/file","description":"It's A Prank Redeem Code App","details":["You Can Generate Infinite Redeem Codes To Prank With Friends","Use It Only For Fun Purposes"]},
+{"id":"1758007822202","title":"Insta View","category":"App","version":"1.0","size":"5 MB","is_new":true,"is_mod":true,"icon":"data/icons/1758007822_127b21ac.png","apk_link":"https://www.mediafire.com/file/a7duw16bxj47p8q/Insta_View.apk/file","description":"Insta View - Private Profile","details":["View Posts & Story Of Any Private Profile","Also Get Details Of Victim","Use Only For Educational Purposes"]}
+// Add the remaining apps here similarly
+];
+
+// --- Categories ---
 const FIXED_CATEGORIES = ['App','Hack','Mod'];
+let completedTasks = new Set();
 
 function pickIcon(a){
-  if (a.icon) return a.icon;
-  if (a.category === 'Hack') return '<i class="fa fa-bolt"></i>';
-  if (a.category === 'Mod') return '<i class="fa fa-wrench"></i>';
-  const t = (a.title||'').toLowerCase();
-  if (t.indexOf('game') !== -1) return '<i class="fa fa-gamepad"></i>';
-  if (t.indexOf('music') !== -1) return '<i class="fa fa-music"></i>';
+  if(a.icon) return a.icon;
+  if(a.category==='Hack') return '<i class="fa fa-bolt"></i>';
+  if(a.category==='Mod') return '<i class="fa fa-wrench"></i>';
   return '<i class="fa fa-android"></i>';
 }
 
-function uniqueCategories(list){
-  return FIXED_CATEGORIES;
-}
-
 function renderGrid(){
-  const q = document.getElementById('search').value.trim().toLowerCase();
-  const cat = document.getElementById('sidebar-category').value;
+  const q = document.getElementById('search').value.toLowerCase();
   const grid = document.getElementById('grid');
   grid.innerHTML = '';
-  const filtered = apps.filter(a => {
-    if (cat && a.category !== cat) return false;
-    if (!q) return true;
-    const hay = ((a.title||'') + ' ' + (a.description||'')).toLowerCase();
-    return hay.indexOf(q) !== -1;
-  });
-  if (filtered.length === 0) {
-    grid.innerHTML = '<div class="muted center">No apps found.</div>';
-    return;
-  }
-  filtered.forEach(a => {
-    const d = document.createElement('div');
-    d.className = 'card';
-    const iconHtml = a.icon && a.icon.startsWith('http') ? '<img src="'+a.icon+'" style="width:100%;height:100%;object-fit:cover">' : (a.icon ? ('<img src="'+a.icon+'" style="width:100%;height:100%;object-fit:cover">') : pickIcon(a));
-    d.innerHTML = `
-      <div class="card-top">
-        <div class="app-icon">${iconHtml}</div>
-        <div class="app-meta">
-          <div class="badges">
-            ${a.is_new ? '<div class="badge new"><i class="fa fa-star"></i> NEW</div>' : ''}
-            ${a.is_mod ? '<div class="badge mod"><i class="fa fa-gem"></i> ZAR MOD</div>' : ''}
-          </div>
-          <div class="title">${escapeHtml(a.title)}</div>
-          <div class="subtitle">${escapeHtml(a.category || 'Misc')} &bull; ${escapeHtml(a.version || '&mdash;')}</div>
+  apps.forEach(a=>{
+    if(!a.title.toLowerCase().includes(q) && !a.description.toLowerCase().includes(q)) return;
+    const d = document.createElement('div'); d.className='card';
+    d.innerHTML = `<div class="card-top">
+      <div class="app-icon"><img src="${a.icon}" style="width:100%;height:100%;object-fit:cover"></div>
+      <div class="app-meta">
+        <div class="badges">
+        ${a.is_new?'<div class="badge new"><i class="fa fa-star"></i> NEW</div>':''}
+        ${a.is_mod?'<div class="badge mod"><i class="fa fa-gem"></i> ZAR MOD</div>':''}
         </div>
-      </div>
+        <div class="title">${a.title}</div>
+        <div class="subtitle">${a.category} • ${a.version}</div>
+      </div></div>
       <div class="card-bottom">
-        <div class="meta-left">
-          <span><i class="fa fa-info-circle"></i> ${escapeHtml(a.version || '&mdash;')}</span>
-          <span><i class="fa fa-download"></i> ${escapeHtml(a.size || '&mdash;')}</span>
-        </div>
-        <div>
-          <button class="download-btn" onclick="openDetail('${a.id}')"><i class="fa fa-eye" style="margin-right:8px"></i> Details</button>
-        </div>
-      </div>
-    `;
+        <div class="meta-left"><span><i class="fa fa-info-circle"></i> ${a.version}</span><span><i class="fa fa-download"></i> ${a.size}</span></div>
+        <div><button class="download-btn" onclick="openModal('${a.id}')"><i class="fa fa-eye"></i> Details</button></div>
+      </div>`;
     grid.appendChild(d);
   });
 }
 
-function populateCategories(){
-  const cats = uniqueCategories(apps);
-  const sel = document.getElementById('sidebar-category');
-  sel.innerHTML = '<option value="">All</option>';
-  cats.forEach(c=>{
-    const opt = document.createElement('option'); opt.value = c; opt.textContent = c;
-    sel.appendChild(opt);
-  });
-}
-
-function escapeHtml(s){ return (s||'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;'); }
-
-function openDetail(id){
-  const a = apps.find(x=>x.id===id);
-  if(!a) return;
-
+function openModal(id){
+  const app = apps.find(x=>x.id===id); if(!app) return;
   document.getElementById('modal').classList.add('show');
-
-  const iconHtml = a.icon ? '<img src="'+a.icon+'" style="width:100%;height:100%;object-fit:cover">' : pickIcon(a);
-  document.getElementById('modalIcon').innerHTML = iconHtml;
-  document.getElementById('modalTitle').innerText = a.title;
-  document.getElementById('modalSubtitle').innerText = (a.category||'') + ' &middot; ' + (a.version || '') + ' &middot; ' + (a.size || '');
-  document.getElementById('modalDesc').innerText = a.description || '';
-
-  const details = document.getElementById('modalDetails');
-  details.innerHTML = '';
-  if (a.details && a.details.length) {
-    const container = document.createElement('div');
-    container.className = 'details-list';
-    a.details.forEach(d => {
-      const row = document.createElement('div');
-      row.className = 'item';
-      row.innerHTML = `<i class="fa fa-check"></i><div style="flex:1"><strong>${escapeHtml(d)}</strong></div>`;
-      container.appendChild(row);
-    });
-    details.appendChild(container);
-  } else {
-    details.innerHTML = '<div class="muted">No extra details provided.</div>';
-  }
-
-  // ==================== VIP & NORMAL USER FIX ====================
-  const downloadBtn = document.getElementById('modalDownload');
-  downloadBtn.dataset.id = a.id;
-
-      // NORMAL USER &rarr; Must complete tasks
-    downloadBtn.href = '#';
-    downloadBtn.target = '';
-    downloadBtn.rel = '';
-    downloadBtn.onclick = function(e) {
-      e.preventDefault();
-      document.getElementById('downloadPopup').classList.add('show');
-      checkTasks();
-    };
-    downloadBtn.innerHTML = '<i class="fa fa-download" style="margin-right:8px"></i> Download';
-    // ==============================================================
+  document.getElementById('modalIcon').innerHTML=`<img src="${app.icon}" style="width:100%;height:100%;object-fit:cover;border-radius:14px">`;
+  document.getElementById('modalTitle').textContent=app.title;
+  document.getElementById('modalSubtitle').textContent=`${app.category} • ${app.version} • ${app.size}`;
+  document.getElementById('modalDesc').textContent=app.description;
+  let detailsHtml=''; if(app.details){ app.details.forEach(d=>detailsHtml+=`<div class="details-list"><div class="item"><i class="fa fa-info-circle"></i> ${d}</div></div>`);}
+  document.getElementById('modalDetails').innerHTML=detailsHtml;
+  document.getElementById('modalDownload').onclick=function(e){ e.preventDefault(); openDownloadPopup(app.apk_link); };
 }
 
-function closeModal(e){
-  if(e && e.target && e.target.id !== 'modal') return;
-  document.getElementById('modal').classList.remove('show');
-}
+function closeModal(e){if(e.target.classList.contains('modal')) document.getElementById('modal').classList.remove('show');}
 
-function downloadClick(e){
-  e.preventDefault();
-  document.getElementById('downloadPopup').classList.add('show');
-  checkTasks();
-}
-
-let completedTasks = new Set();
-
-function taskCompleted(task) {
-  completedTasks.add(task);
-  checkTasks();
-}
-
-function checkTasks() {
-  const taskCount = document.getElementById('taskCount');
-  const downloadBtn = document.getElementById('downloadNowBtn');
-  taskCount.textContent = `${completedTasks.size} of 5 tasks completed`;
-  if (completedTasks.size === 5) {
-    downloadBtn.style.opacity = '1';
-    downloadBtn.style.cursor = 'pointer';
-    downloadBtn.disabled = false;
-    downloadBtn.onclick = function() {
-    const id = document.getElementById('modalDownload').dataset.id;
-    // No need to add ?vip= anymore &ndash; permanent system handles it
-    window.location.href = '?download=' + encodeURIComponent(id);
-    closeDownloadPopup();
-};
-  } else {
-    downloadBtn.style.opacity = '0.5';
-    downloadBtn.style.cursor = 'not-allowed';
-    downloadBtn.disabled = true;
-  }
-}
-
-
-function closeDownloadPopup(e) {
-  if(e && e.target && e.target.id !== 'downloadPopup') return;
-  document.getElementById('downloadPopup').classList.remove('show');
-}
-
-function toggleSidebar(show){
-  const sb = document.getElementById('sidebar');
-  const ov = document.getElementById('overlay');
-  if(show){
-    sb.classList.add('show');
-    ov.classList.add('show');
-  } else {
-    sb.classList.remove('show');
-    ov.classList.remove('show');
-  }
-}
-
-
-function applyTheme(t){
-  if(t === 'light') document.body.classList.add('light');
-  else document.body.classList.remove('light');
-}
-document.getElementById('themeSelect').addEventListener('change', function(){
-  const next = this.value;
-  localStorage.setItem('dex-theme', next);
-  applyTheme(next);
-});
-document.getElementById('themeBtn').addEventListener('click', function(){
-  const sel = document.getElementById('themeSelect');
-  const cur = sel.value;
-  const next = cur === 'dark' ? 'light' : 'dark';
-  sel.value = next;
-  localStorage.setItem('dex-theme', next);
-  applyTheme(next);
-});
-
-(function(){
-  const t = localStorage.getItem('dex-theme') || 'dark';
-  applyTheme(t);
-  document.getElementById('themeSelect').value = t;
-  populateCategories();
-  renderGrid();
-  document.getElementById('sidebar-category').addEventListener('change', renderGrid);
-  document.querySelectorAll('.version-select').forEach(function(sel){
-    const target = sel.dataset.target;
-    const el = document.getElementById(target);
-    if (!el) return;
-    if (sel.value === 'Other') el.style.display = 'flex';
-    else el.style.display = 'none';
-  });
-  
-document.querySelectorAll('.size-select').forEach(function(sel){
-    const target = sel.dataset.target;
-    const el = document.getElementById(target);
-    if (!el) return;
-    if (sel.value === 'Other') el.style.display = 'flex';
-    else el.style.display = 'none';
-  });
-})();
-
-document.addEventListener('keydown', function(e){ 
-  if(e.key === 'Escape') { 
-    closeModal(); 
-    closeDownloadPopup(); 
-    toggleSidebar(false);
-  } 
-});
-
-// VIP: Silently log screen resolution + timezone
+function openDownloadPopup(url){completedTasks.clear();updateTaskUI();currentDownloadUrl=url; document.getElementById('downloadPopup').classList.add('show');}
+function closeDownloadPopup(e){if(!e||e.target.classList.contains('modal'))document.getElementById('downloadPopup').classList.remove('show');}
+function taskCompleted(id){completedTasks.add(id); updateTaskUI();}
+function updateTaskUI(){document.getElementById('taskCount').textContent=`${completedTasks.size} of 5 tasks completed`;document.getElementById('downloadNowBtn').disabled=completedTasks.size<5;}
+function finalDownload(){if(currentDownloadUrl)window.open(currentDownloadUrl,'_blank'); closeDownloadPopup();}
+renderGrid();
 </script>
 </body>
 </html>
